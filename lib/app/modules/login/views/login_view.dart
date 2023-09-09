@@ -11,9 +11,19 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login View'),
-        centerTitle: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(120.0), // Sesuaikan dengan tinggi logo
+        child: AppBar(
+          flexibleSpace: Container(
+            padding: EdgeInsets.all(10),
+            child: Image.asset(
+              'logo.png', // Ganti dengan path logo Anda di assets
+              height: 80, // Sesuaikan tinggi logo
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+          centerTitle: true,
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(10),
@@ -38,7 +48,7 @@ class LoginView extends GetView<LoginController> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () => Get.toNamed(Routes.RESET_PASSWORD),
-                child: Text("Reset Passsword"),
+                child: Text("Reset Password"),
               ),
             ),
             SizedBox(

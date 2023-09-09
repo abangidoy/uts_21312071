@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
 import '../controllers/add_product_controller.dart';
 
 class AddProductView extends GetView<AddProductController> {
   const AddProductView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Product'),
+        title: const Text('Tambah Produk'),
         centerTitle: true,
       ),
       body: Padding(
@@ -18,27 +18,41 @@ class AddProductView extends GetView<AddProductController> {
         child: Column(
           children: [
             TextField(
-              controller: controller.cNama,
+              controller: controller.cNPM,
               autocorrect: false,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: "Nama Produk"),
-            ),
-            SizedBox(
-              height: 10,
+              decoration: InputDecoration(labelText: "NPM"),
             ),
             TextField(
-              controller: controller.cHarga,
+              controller: controller.cNama,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: "Nama"),
+            ),
+            TextField(
+              controller: controller.cAlamat,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: "Alamat"),
+            ),
+            TextField(
+              controller: controller.cProgramStudi,
+              textInputAction: TextInputAction.next,
+              decoration: InputDecoration(labelText: "Program Studi"),
+            ),
+            TextField(
+              controller: controller.cJK,
               textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Harga Produk"),
+              decoration: InputDecoration(labelText: "Jenis Kelamin"),
             ),
             SizedBox(
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () => controller.addProduct(
+              onPressed: () => controller.tambahProduk(
+                controller.cNPM.text,
                 controller.cNama.text,
-                controller.cHarga.text,
+                controller.cAlamat.text,
+                controller.cProgramStudi.text,
+                controller.cJK.text,
               ),
               child: Text("Simpan"),
             ),

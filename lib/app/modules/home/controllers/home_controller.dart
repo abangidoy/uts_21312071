@@ -2,40 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<QuerySnapshot<Object?>> GetData() async {
-    CollectionReference products = firestore.collection('products');
-
-    return products.get();
-  }
-
-  Stream<QuerySnapshot<Object?>> streamData() {
-    CollectionReference products = firestore.collection('products');
-    return products.snapshots();
-  }
-
-  void deleteProduct(String id) {
-    DocumentReference docRef = firestore.collection("products").doc(id);
-
+  Future<QuerySnapshot<Map<String, dynamic>>> getData() async {
     try {
-      Get.defaultDialog(
-        title: "Info",
-        middleText: "Apakah anda yakin menghapus data ini",
-        onConfirm: () {
-          docRef.delete();
-          Get.back();
-        },
-        textConfirm: "Ya",
-        textCancel: "Batal",
-      );
+      // Mengambil data dari koleksi 'mahasiswa'
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await firestore.collection('mahasiswa').get();
+
+      return querySnapshot;
     } catch (e) {
-      print(e);
-      Get.defaultDialog(
-        title: "Terjadi kesalahan",
-        middleText: "Tidak berhasil menghapus data",
-      );
+      print(e.toString());
+      throw e; // Lebih baik melempar kembali kesalahan agar dapat ditangani di atasnya.
+    }
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamData() {
+    // Menggunakan stream untuk data real-time dari koleksi 'mahasiswa'
+    return firestore.collection('mahasiswa').snapshots();
+  }
+
+  Future<void> deleteProduct(String id) async {
+    try {
+      // Menghapus dokumen berdasarkan ID
+      await firestore.collection("mahasiswa").doc(id).delete();
+    } catch (e) {
+      print(e.toString());
     }
   }
 }
